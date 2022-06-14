@@ -30,11 +30,16 @@ console.log('example task:', processFirstItem(['foo','bar'],function(str){return
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
-  
+  Counter1 is using the count variable within the function scope. Where is counter2 is using a variale within the global scope. 
+
   2. Which of the two uses a closure? How can you tell?
-  
+  // counter1 uses the counter becasue it has a function within a function. So the inner function is accessing stuff from the outer function. 
+
   3. In what scenario would the counter1 code be preferable? In what scenario would 
      counter2 be better?  
+     counter1 would be preferable when it comes to data privacy, so no one would be able to access the data from an outside scope of the function. 
+     Counter2 would be usuable within the global scope. Therefore the code can be accessed all the time.  
+
 */
 
 // counter1 code
@@ -46,6 +51,7 @@ function counterMaker() {
 }
 
 const counter1 = counterMaker();
+console.log(counter1())
 
 // counter2 code
 let count = 0;
@@ -53,6 +59,7 @@ let count = 0;
 function counter2() {
   return count++;
 }
+
 
 
 /* ⚾️⚾️⚾️ Task 2: inning() ⚾️⚾️⚾️
@@ -64,9 +71,16 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
-}
+
+function inning(){
+    let random = 0; 
+    return function RandomInning(){
+      return random = (Math.floor(Math.random() * (2 - 0 + 1) + 0));
+    }
+  }
+//const RandomInning = inning();
+//console.log(RandomInning());
+
 
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
@@ -83,10 +97,25 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*Code Here*/){
-  /*Code Here*/
+
+function finalScore(Function, HowManyInnings){
+  const RandomInning = Function;
+  let number = 1;
+  const BothScores = {
+    Home: 0,
+    Away: 0
+  };
+  
+  for(let i = 0; i < HowManyInnings; i++){
+    BothScores.Home += RandomInning();
+    BothScores.Away += RandomInning();
+  }
+
+  return(BothScores);
 }
 
+
+/*
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
@@ -101,10 +130,15 @@ For example: invoking getInningScore(inning) might return this object:
   */
 
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(Function) {
+  const RandomInning = Function;
+  const BothScores = {};
+  BothScores.Home = RandomInning();
+  BothScores.Away = RandomInning();
 
+  return BothScores;
 }
+
 
 
 /* STRETCH: ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
@@ -147,11 +181,21 @@ Use the scoreboard function below to do the following:
   "This game will require extra innings: Away 10 - Home 10"
 ] */
 // NOTE: There is no test associated with this code; if your output matches the given example, consider it complete!
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+
+
+
+function scoreboard(Function1, Function2, InningNumber) {
+  const RandomInning = Function2;
+  const BothScores = [];
+
+  for(let i = 0; i < InningNumber(); i++){
+    BothScores[i] = ('Inning 1: Away ' + Function1(Function2()).Away  + 'Home 1: ' + Function1(Function2()).Home);
+  }
+  return(BothScores);
+  
 }
-
-
+//console.log(getInningScore(),inning(),9);
+//function1 = getInningScore(); function2 = inning()
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
