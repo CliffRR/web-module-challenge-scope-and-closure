@@ -73,11 +73,8 @@ NOTE: This will be a callback function for the tasks below
 
 
 function inning(){
-    let random = 0; 
-    return function RandomInning(){
-      return random = (Math.floor(Math.random() * (2 - 0 + 1) + 0));
-    }
-  }
+  return (Math.floor(Math.random() * (2 - 0 + 1) + 0));
+}
 //const RandomInning = inning();
 //console.log(RandomInning());
 
@@ -99,16 +96,14 @@ Use the finalScore function below to do the following:
 
 
 function finalScore(Function, HowManyInnings){
-  const RandomInning = Function;
-  let number = 1;
   const BothScores = {
     Home: 0,
     Away: 0
   };
   
   for(let i = 0; i < HowManyInnings; i++){
-    BothScores.Home += RandomInning();
-    BothScores.Away += RandomInning();
+    BothScores.Home += Function();
+    BothScores.Away += Function();
   }
 
   return(BothScores);
@@ -130,11 +125,10 @@ For example: invoking getInningScore(inning) might return this object:
   */
 
 
-function getInningScore(Function) {
-  const RandomInning = Function;
+function getInningScore(Task2Function) {
   const BothScores = {};
-  BothScores.Home = RandomInning();
-  BothScores.Away = RandomInning();
+  BothScores.Home = Task2Function();
+  BothScores.Away = Task2Function();
 
   return BothScores;
 }
@@ -184,17 +178,30 @@ Use the scoreboard function below to do the following:
 
 
 
-function scoreboard(Function1, Function2, InningNumber) {
-  const RandomInning = Function2;
+function scoreboard(FunctionGetInning, FunctionInning, InningNumber) {
   const BothScores = [];
+  const FinalArray = [];
+  let TotalAway = 0;
+  let TotalHome = 0; 
+  
 
-  for(let i = 0; i < InningNumber(); i++){
-    BothScores[i] = ('Inning 1: Away ' + Function1(Function2()).Away  + 'Home 1: ' + Function1(Function2()).Home);
+  for(let i = 0; i < InningNumber; i++){
+    BothScores[i] = FunctionGetInning(FunctionInning);
+    FinalArray[i] = ('Inning 1: Away ' + BothScores[i].Away  + ' Home 1: ' + BothScores[i].Home);
+    TotalAway += BothScores[i].Away;
+    TotalHome += BothScores[i].Home;
   }
-  return(BothScores);
+  if(TotalAway === TotalHome){
+    FinalArray.push("This game will require extra innings: Away " + TotalAway + " - Home " + TotalHome);
+  }
+  else{
+    FinalArray.push("Final Score: Away " + TotalAway + " - Home " + TotalHome);
+  }
+
+  return(FinalArray);
   
 }
-//console.log(getInningScore(),inning(),9);
+console.log(scoreboard(getInningScore,inning,3));
 //function1 = getInningScore(); function2 = inning()
 
 
